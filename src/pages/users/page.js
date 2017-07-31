@@ -17,125 +17,83 @@ export class Users extends Component {
   }
 
   changeChart(brandId = ""){
-    console.log("brandId", brandId)
-
     const userArray = [];
     const userArraySort = [];
-
     const shareUser = [];
     const commentUser = [];
     const favoriteUser = [];
     const arrayTotal = [];
+    const arrayUserCount = [];
     let totalIteratorSort = [];
-
+  
     this.props.iterator.map((shot, i) => {
 
+      let totalIterator = 
+        brandId != "" ? 
+          this.props.iterator.filter(x =>  brandId == x.brand)
+        : 
+          this.props.iterator;
+
       if(!userArray.includes(shot.user)){
-
-          if(brandId != ""){
-            var obj = {
-              "user": shot.user, 
-              "totalIterator": this.props.iterator
-              .filter(x =>  x.brand == brandId)
+          var obj = {
+            "user": shot.user, 
+            "totalIterator": totalIterator
               .reduce(function(n, val) {
-                  return n + (val.user === shot.user);
-            }, 0)}
-          }else{
-            var obj = {
-              "user": shot.user, 
-              "totalIterator": this.props.iterator
-              .reduce(function(n, val) {
-                  return n + (val.user === shot.user);
+                return n + (val.user === shot.user);
               }, 0)}
-          }
-          arrayTotal.push(obj);
 
+        arrayTotal.push(obj);
         userArray.push(shot.user);
       }
     });
-
-
-
 
     totalIteratorSort = arrayTotal.sort(function(obj1, obj2) {
         return obj2.totalIterator - obj1.totalIterator;
     });
 
+    totalIteratorSort.map((totalIteratorSort, i) => {
+      let totalIterator = 
+      brandId != "" ? 
+        this.props.iterator.filter(x =>  brandId == x.brand)
+      : 
+        this.props.iterator;
 
+      this.props.iterator.map((shot, j) => {
+        if(totalIteratorSort.user === shot.user && !arrayUserCount.includes(shot.user)){
+          arrayUserCount.push(shot.user);
+          
+          let share = totalIterator
+            .filter(x => x.type == "SHARE")
+            .filter(x => x.user == shot.user)
+            .length;
 
+          let comment = totalIterator
+            .filter(x => x.type == "COMMENT")
+            .filter(x => x.user == shot.user)
+            .length;
 
-    if(brandId != ""){
-      totalIteratorSort.map((totalIteratorSort, i) => {
-        this.props.iterator.map((shot, j) => {
-          if(totalIteratorSort.user === shot.user && !userArraySort.includes(shot.user)){
-            userArraySort.push(shot.user);
-            shareUser.push((
-              this.props.iterator
-              .filter(x => x.type == "SHARE")
-              .filter(y=> y.brand == brandId)
-              .filter(x => x.user == shot.user))
-              .length
-            );
-            commentUser.push((
-              this.props.iterator
-              .filter(x => x.type == "COMMENT")
-              .filter(y=> y.brand == brandId)
-              .filter(x => x.user == shot.user))
-              .length
-            );
-            favoriteUser.push((
-              this.props.iterator
-              .filter(x => x.type == "FAVORITE")
-              .filter(y=> y.brand == brandId)
-              .filter(x => x.user == shot.user))
-              .length
-            );
+          let favorite =  totalIterator
+            .filter(x => x.type == "FAVORITE")
+            .filter(x => x.user == shot.user)
+            .length;
+
+          if(share != 0 || comment != 0 || favorite != 0){
+            userArraySort.push(this.props.user.filter(x => x.id == shot.user)[0].name.first);
+            shareUser.push(share);
+            commentUser.push(comment);
+            favoriteUser.push(favorite);
           }
-        });
+          
+        }
       });
-    }else{
-      totalIteratorSort.map((totalIteratorSort, i) => {
-        this.props.iterator.map((shot, j) => {
-          if(totalIteratorSort.user === shot.user && !userArraySort.includes(shot.user)){
-            userArraySort.push(shot.user);
-            shareUser.push((
-              this.props.iterator
-              .filter(x => x.type == "SHARE")
-              .filter(x => x.user == shot.user))
-              .length
-            );
-            commentUser.push((
-              this.props.iterator
-              .filter(x => x.type == "COMMENT")
-              .filter(x => x.user == shot.user))
-              .length
-            );
-            favoriteUser.push((
-              this.props.iterator
-              .filter(x => x.type == "FAVORITE")
-              .filter(x => x.user == shot.user))
-              .length
-            );
-          }
-        });
-      });
-    }
-
-    console.log("array de usuários", userArray )
-    
-    console.log("userArraySort", userArraySort)
-    console.log("totalIteratorSort", totalIteratorSort)
-    console.log("shareUser", shareUser )
-    console.log("commentUser", commentUser )
-    console.log("favoriteUser", favoriteUser )
-
+    });
 
     Highcharts.chart('chart', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Stacked column chart'
+            text: 'Gráfico de Iterações de Usuários'
         },
         xAxis: {
             categories: userArraySort
@@ -143,16 +101,38 @@ export class Users extends Component {
         yAxis: {
             min: 0,
             title: {
-                text: 'Total fruit consumption'
+                text: 'Iterações'
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
             }
         },
+        legend: {
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
         tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-            shared: true
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
         },
         plotOptions: {
             column: {
-                stacking: 'percent'
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                }
             }
         },
         series: [{
@@ -167,8 +147,6 @@ export class Users extends Component {
         }]
     });
   }
-
-
 
   componentDidMount() {
     this.props.fetchUser(); 
