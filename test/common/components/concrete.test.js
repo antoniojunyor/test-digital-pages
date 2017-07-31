@@ -1,13 +1,21 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import {updateShots, resetState} from '../../../src/redux/shot/ShotAction';
-import reducer from '../../../src/redux/shot/ShotReducer';
+import {updateUser, updateBrand, updateIterator, resetState} from '../../../src/redux/influence/InfluenceAction';
+import reducer from '../../../src/redux/influence/InfluenceReducer';
 
 
 describe('actions', function() {
-    test('updateShots', () => {
-        expect(updateShots().type).toEqual("UPDATE_SHOTS")
+    test('updateUser', () => {
+        expect(updateUser().type).toEqual("UPDATE_USER")
+    });
+
+    test('updateBrand', () => {
+        expect(updateBrand().type).toEqual("UPDATE_BRAND")
+    });
+
+    test('updateIterator', () => {
+        expect(updateIterator().type).toEqual("UPDATE_ITERATOR")
     });
 
     test('resetState', () => {
@@ -20,7 +28,9 @@ describe('Reducers', () => {
   it('initalstate', () => {
     expect(reducer(undefined, {})).toEqual(
       {
-       	shots: []
+       	user: [],
+        brand: [],
+        iterator: []
       }
     )
   })

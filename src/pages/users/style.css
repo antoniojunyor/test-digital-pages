@@ -3,7 +3,6 @@
   border-bottom: 2px solid #ccc;
   width: 100%;
   background: #fff;
-  z-index: 99;
   margin-bottom: 20px;
     @media (min-width: 1024px) {
     border: none;

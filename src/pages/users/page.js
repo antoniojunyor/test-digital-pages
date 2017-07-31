@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import grid from '../../style/grid.css';
 import styles from './style.css';
-import cx from 'classnames';
-
 import { connect } from 'react-redux';
 import InfluenceAction, { fetchUser, fetchBrand, fetchIterator } from '../../redux/influence/InfluenceServices';
 import InfluenceSelectors from '../../redux/influence/InfluenceSelectors';
@@ -93,7 +89,7 @@ export class Users extends Component {
             type: 'column'
         },
         title: {
-            text: 'Gráfico de Iterações de Usuários'
+            text: 'Usuários Influentes'
         },
         xAxis: {
             categories: userArraySort
@@ -113,7 +109,7 @@ export class Users extends Component {
         },
         legend: {
             align: 'right',
-            x: -30,
+            x: 0,
             verticalAlign: 'top',
             y: 25,
             floating: true,
@@ -178,7 +174,7 @@ export class Users extends Component {
       <div className={styles.app}>
          <section>
           {this.props.iterator == "" && 
-            <img src="http://concrete-project.azurewebsites.net/assets/loader.gif" className={styles.loader} id="loader"/>
+            <img src="http://test-digital-pages.azurewebsites.net/assets/loader.gif" className={styles.loader} id="loader"/>
           }
            <div className={styles.wrap_select}>
              <select onChange={this.handleChangeSelect}>
