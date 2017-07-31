@@ -1,0 +1,4 @@
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_BRAND = 'UPDATE_BRAND';
+export const UPDATE_ITERATOR = 'UPDATE_ITERATOR';
+export const RESET_STATE = 'RESET_STATE';

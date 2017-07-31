@@ -1,0 +1,13 @@
+.social{
+  text-align: right;
+  margin: 5px 0 10px 0;
+  .img_social{
+    width: 15px;
+  }
+  .count_social{
+    font-size: 13px;
+    position: relative;
+    top: -3px;
+    margin: 0 10px 0 3px;
+  }
+}

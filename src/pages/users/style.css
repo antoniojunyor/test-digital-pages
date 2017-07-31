@@ -1,0 +1,114 @@
+.wrap_select{
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
+  /*position: fixed;*/
+  width: 100%;
+  background: #fff;
+  z-index: 99;
+    @media (min-width: 1024px) {
+    border: none;
+  }
+
+  select{
+    margin: 0 auto;
+    display: block;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    color: #7f7c7c;
+  }
+}
+.loader{
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+}
+.wrap_content{
+  padding-top: 75px;
+
+  .content_article{
+    box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.54);
+    border-radius: 8px;
+  }
+
+  article{
+    margin-bottom: 30px;
+    
+    .wrap_img{
+      img{
+        width: 100%;
+        display: block;
+        border-radius: 8px 8px 0 0;
+        max-width: 860px;
+        
+      }
+    }
+    
+    .wrap_info{
+      background: #e6e6e6;
+      border-radius: 0 0 8px 8px;
+      padding-bottom: 20px;
+      h1{
+        margin: 0;
+        padding: 10px 0;
+        text-align: center;
+        text-transform: uppercase;
+        color: #7f7c7c;
+        font-size: 18px;
+      }
+      p{
+        margin: 0 0 20px 0;
+        padding: 0 20px;
+        text-align: center;
+        color: #7f7c7c;
+        font-size: 15px;
+      }
+      a{
+        display: block;
+        text-align: center;
+        width: 130px;
+        height: 36px;
+        background: #ccc;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 14px;
+        margin: 0 auto;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding-top: 9px;
+        &:hover{
+          color: #7f7c7c;
+        }
+      }
+    }
+  }
+}
+.wrap_articles{
+  overflow: hidden;
+}
+.wrap_pagination{
+  text-align: center;
+  margin: 40px 0 55px 0;
+  button{
+    border: 1px solid #ccc;
+    background: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    margin-right: 8px;
+    color: #aeaeae;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+
+    &.active{
+      background: #cccccc;
+      color: #fff;
+    }
+    &:hover{
+      background: #cccccc;
+      color: #fff;
+    }
+  }
+}
